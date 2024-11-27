@@ -9,11 +9,11 @@ function CustomerList() {
     const [customers, setCustomers] = useState([]);
 
     const [colDelfs, setColDefs] = useState([
-        { field: "firstname", filter: true, floatingFilter: true },
-        { field: "lastname", filter: true, floatingFilter: true },
+        { field: "firstname", filter: true },
+        { field: "lastname", filter: true },
         { field: "streetaddress", filter: true },
-        { field: "postcode", filter: true, floatingFilter: true },
-        { field: "city", filter: true, floatingFilter: true },
+        { field: "postcode", filter: true },
+        { field: "city", filter: true },
         { field: "email", filter: true },
         { field: "phone", filter: true },
     ])
