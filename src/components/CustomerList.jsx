@@ -9,13 +9,13 @@ function CustomerList() {
     const [customers, setCustomers] = useState([]);
 
     const [colDelfs, setColDefs] = useState([
-        { field: "firstname", filter: true },
-        { field: "lastname", filter: true },
+        { field: "firstname", filter: true, width: 150 },
+        { field: "lastname", filter: true, width: 150 },
         { field: "streetaddress", filter: true },
-        { field: "postcode", filter: true },
-        { field: "city", filter: true },
+        { field: "postcode", filter: true, width: 120 },
+        { field: "city", filter: true, width: 150 },
         { field: "email", filter: true },
-        { field: "phone", filter: true },
+        { field: "phone", filter: true, width: 140 },
     ])
 
     useEffect(() => {
@@ -29,13 +29,14 @@ function CustomerList() {
     }
 
     return (
-        <div className = 'ag-theme-material' style={{height: 700, width: 1000}}>
+        <div className = 'ag-theme-material' style={{height: 500, width: 1100}}>
             <AgGridReact 
                 rowData={customers}
                 columnDefs={colDelfs}
                 pagination={true}
                 paginationAutoPageSize={true}
                 suppressCellFocus={true}
+                rowSelection="single"
             />
         </div>
     )
