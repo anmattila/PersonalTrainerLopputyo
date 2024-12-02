@@ -33,6 +33,12 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      "overrides": [
+        {
+          "rules": {
+            "react/prop-types": "off"
+          }
+        }]
     },
   },
 ]

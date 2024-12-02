@@ -22,3 +22,25 @@ export function getTrainingsWithCustomers() {
             return response.json();
         })
 }
+
+export function deleteTraining(url) {
+    return fetch(trainingApi + "/" + url, { method: "DELETE" })
+        .then(response => {
+            if(!response.ok)
+                throw new Error("Error in delete " + response.statusText)
+            return response.json();
+        })
+}
+
+export function saveTrainingToCustomer(url, newTraining) {
+    return fetch(trainingApi, { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({...newTraining, customer: url})
+    })
+    .then(response => {
+        if(!response.ok)
+            throw new Error("Erron in saving " + response.statusText)
+        return response.json();
+    })
+}

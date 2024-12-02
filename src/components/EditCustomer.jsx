@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { saveCustomer } from '../customerapi';
+import { updateCustomer } from '../customerapi';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
-function AddCustomer(props) {
+function EditCustomer(props) {
 
     const [customer, setCustomer] = useState({
         firstname: "",
@@ -18,6 +19,15 @@ function AddCustomer(props) {
 
     const handleClickOpen = () => {
         setOpen(true);
+        setCustomer({
+            firstname: props.data.firstname,
+            lastname: props.data.lastname,
+            streetaddress: props.data.streetaddress,
+            postcode: props.data.postcode,
+            city: props.data.city,
+            email: props.data.email,
+            phone: props.data.phone
+        })
     };
 
     const handleClose = () => {
@@ -27,20 +37,17 @@ function AddCustomer(props) {
     const handleChange = (event) => {
         setCustomer({ ...customer, [event.target.name]: event.target.value })
     };
-    // https://stackoverflow.com/questions/69504211/why-is-my-input-field-not-editable-even-after-adding-onchange-function-react
 
     const handleSave = () => {
-        saveCustomer(customer)
-            .then(() => {
-                props.handleFetch();
-                handleClose();
-            })
-            .catch(error => console.log(error))
+        // eslint-disable-next-line react/prop-types
+        updateCustomer(props.data._links.self.href, customer)
+            .then(() => props.handleFetch())
+            .catch(error => console.error(error))
     };
 
     return (
         <>
-            <Button variant="contained" onClick={handleClickOpen}>Add new customer</Button>
+        <Button color="black" onClick={handleClickOpen} endIcon={<EditIcon />} ></Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New customer info</DialogTitle>
                 <DialogContent>
@@ -113,7 +120,7 @@ function AddCustomer(props) {
                         name="phone"
                         value={customer.phone}
                         onChange={handleChange}
-                        //only numbers?
+                    //only numbers?
                     />
                 </DialogContent>
                 <DialogActions>
@@ -121,8 +128,11 @@ function AddCustomer(props) {
                     <Button variant="contained" color="success" onClick={handleSave}>Save</Button>
                 </DialogActions>
             </Dialog>
+
         </>
     )
+
+
 }
 
-export default AddCustomer;
+export default EditCustomer;
