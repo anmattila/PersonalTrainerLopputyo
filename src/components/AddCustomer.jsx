@@ -19,33 +19,32 @@ function AddCustomer(props) {
     const handleClickOpen = () => {
         setOpen(true);
     };
-
+    
+    const handleChange = (event) => {
+        setCustomer({ ...customer, [event.target.name]: event.target.value })
+    };
+    
+    const handleSave = () => {
+        saveCustomer(customer)
+        .then(() => {
+            props.handleFetch();
+            handleClose();
+        })
+        .catch(error => console.log(error))
+    };
+    
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
-        setCustomer({ ...customer, [event.target.name]: event.target.value })
-    };
-    // https://stackoverflow.com/questions/69504211/why-is-my-input-field-not-editable-even-after-adding-onchange-function-react
-
-    const handleSave = () => {
-        saveCustomer(customer)
-            .then(() => {
-                props.handleFetch();
-                handleClose();
-            })
-            .catch(error => console.log(error))
-    };
 
     return (
         <>
-            <Button variant="contained" onClick={handleClickOpen}>Add new customer</Button>
+            <Button variant="outlined" color="black" onClick={handleClickOpen}>Add new customer</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New customer info</DialogTitle>
                 <DialogContent>
                     <TextField
-                        required
                         fullWidth
                         margin="dense"
                         variant="outlined"
@@ -55,7 +54,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         fullWidth
                         margin="dense"
                         variant="outlined"
@@ -65,7 +63,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         fullWidth
                         margin="dense"
                         variant="outlined"
@@ -75,7 +72,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         className="half-width-field"
                         margin="dense"
                         variant="outlined"
@@ -85,7 +81,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         className="half-width-field"
                         margin="dense"
                         variant="outlined"
@@ -95,7 +90,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         fullWidth
                         margin="dense"
                         variant="outlined"
@@ -105,7 +99,6 @@ function AddCustomer(props) {
                         onChange={handleChange}
                     />
                     <TextField
-                        required
                         fullWidth
                         margin="dense"
                         variant="outlined"

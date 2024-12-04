@@ -7,6 +7,7 @@ export default function Error() {
     return (
         <div>
             <h2>Page not able to be found</h2>
+            <a href="/">Back to homepage</a>
             <p>{error.data}</p>
         </div>
     );

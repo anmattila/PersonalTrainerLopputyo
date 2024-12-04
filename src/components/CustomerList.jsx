@@ -7,8 +7,10 @@ import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 
+import { Container, Typography, Box, CssBaseline } from "@mui/material";
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+
 
 function CustomerList() {
 
@@ -16,6 +18,10 @@ function CustomerList() {
     //const [open, setOpen] = useState(false);
 
     const [colDelfs, setColDefs] = useState([
+        {
+            field: "add",
+            cellRenderer: params => <AddTraining data={params.data} handleFetch={handleFetch} />, width: 80
+        },
         { field: "firstname", filter: true, width: 140 },
         { field: "lastname", filter: true, width: 140 },
         { field: "streetaddress", filter: true, width: 150 },
@@ -24,15 +30,12 @@ function CustomerList() {
         { field: "email", filter: true },
         { field: "phone", filter: true, width: 130 },
         {
-            cellRenderer: params => <AddTraining data={params.data} handleFetch={handleFetch}/>, width: 70
+            cellRenderer: params => <UpdateCustomer data={params.data} handleFetch={handleFetch} />, width: 70
         },
         {
-            cellRenderer: params => <UpdateCustomer data={params.data} handleFetch={handleFetch}/>, width: 70
-        },
-        {
-            cellRenderer: params => <Button color="error" onClick={() => handleDelete(params.data)}>
-                <DeleteIcon /> </Button>, width: 70
-        },
+            cellRenderer: params => <Button color="black" onClick={() => handleDelete(params.data)}>
+                <DeleteIcon /></Button>, width: 70
+        }
     ])
 
     useEffect(() => {
@@ -47,7 +50,7 @@ function CustomerList() {
 
     const handleDelete = (params) => {
         if (window.confirm("Delete customer?")) {
-           // setOpen(true);
+            // setOpen(true);
             deleteCustomer(params._links.self.href)
                 .then(() => handleFetch())
                 .catch(error => console.log(error))
@@ -61,18 +64,25 @@ function CustomerList() {
 
     return (
         <>
-            <AddCustomer handleFetch={handleFetch} />
-
-            <div className='ag-theme-material' style={{ height: 500, width: 1100 }}>
-                <AgGridReact
-                    rowData={customers}
-                    columnDefs={colDelfs}
-                    pagination={true}
-                    paginationAutoPageSize={true}
-                    suppressCellFocus={true}
-                    rowSelection="single"
-                />
-            </div>
+            <Container maxWidth="xl">
+            <CssBaseline />
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
+                    <Typography variant="h5" >Customers</Typography>
+                    <AddCustomer handleFetch={handleFetch} />
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className='ag-theme-material' style={{ height: 500, width: 1100 }}>
+                        <AgGridReact
+                            rowData={customers}
+                            columnDefs={colDelfs}
+                            pagination={true}
+                            paginationAutoPageSize={true}
+                            suppressCellFocus={true}
+                            rowSelection="single"
+                        />
+                    </div>
+                </Box>
+            </Container>
         </>
     )
 

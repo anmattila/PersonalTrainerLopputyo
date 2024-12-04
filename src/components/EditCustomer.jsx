@@ -30,24 +30,25 @@ function EditCustomer(props) {
         })
     };
 
+    const handleChange = (event) => {
+        setCustomer({ ...customer, [event.target.name]: event.target.value })
+    };
+    
+    const handleSave = () => {
+        // eslint-disable-next-line react/prop-types
+        updateCustomer(props.data._links.self.href, customer)
+        .then(() => props.handleFetch())
+        .catch(error => console.error(error))
+    };
+    
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
-        setCustomer({ ...customer, [event.target.name]: event.target.value })
-    };
-
-    const handleSave = () => {
-        // eslint-disable-next-line react/prop-types
-        updateCustomer(props.data._links.self.href, customer)
-            .then(() => props.handleFetch())
-            .catch(error => console.error(error))
-    };
 
     return (
         <>
-        <Button color="black" onClick={handleClickOpen} endIcon={<EditIcon />} ></Button>
+        <Button color="black" onClick={handleClickOpen} startIcon={<EditIcon />}></Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New customer info</DialogTitle>
                 <DialogContent>
