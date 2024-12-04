@@ -53,7 +53,7 @@ function Traininglist() {
 
     const handleDelete = (params) => {
         const training = getTrainings(params);
-        if (window.confirm("Delete training?")) {
+        if (window.confirm("Are you sure you want to delete this training?")) {
             deleteTraining(params.id)
                 .then(() => handleFetch())
                 .catch(error => console.log(error))

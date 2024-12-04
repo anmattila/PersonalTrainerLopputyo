@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import AddCustomer from './AddCustomer';
 import UpdateCustomer from './EditCustomer';
 import AddTraining from "./AddTraining";
@@ -26,8 +26,8 @@ function CustomerList() {
         { field: "lastname", filter: true, width: 140 },
         { field: "streetaddress", filter: true, width: 150 },
         { field: "postcode", filter: true, width: 110 },
-        { field: "city", filter: true, width: 150 },
-        { field: "email", filter: true },
+        { field: "city", filter: true, width: 140 },
+        { field: "email", filter: true, width: 150 },
         { field: "phone", filter: true, width: 130 },
         {
             cellRenderer: params => <UpdateCustomer data={params.data} handleFetch={handleFetch} />, width: 70
@@ -49,7 +49,7 @@ function CustomerList() {
     }
 
     const handleDelete = (params) => {
-        if (window.confirm("Delete customer?")) {
+        if (window.confirm("Are you sure you want to delete this customer and all their trainings?")) {
             // setOpen(true);
             deleteCustomer(params._links.self.href)
                 .then(() => handleFetch())
@@ -62,10 +62,28 @@ function CustomerList() {
     //     setOpen(false);
     //   }
 
+    const [gridApi, setGridApi] = useState(null);
+
+    const onGridReady = useCallback((event) => {
+        setGridApi(event.api);
+    }, []);
+
+    const exportCsv = () => {
+        if(gridApi) {
+            gridApi.exportDataAsCsv({
+                columnKeys: ["firstname", "lastname", "streetaddress", "postcode", "city", "email", "phone"]
+            });
+        } else {
+            console.log("error");
+        }
+    };
+
+
     return (
         <>
             <Container maxWidth="xl">
             <CssBaseline />
+                <Button variant="outlined" color="black" onClick={exportCsv}>Csv-file</Button>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
                     <Typography variant="h5" >Customers</Typography>
                     <AddCustomer handleFetch={handleFetch} />
@@ -79,6 +97,7 @@ function CustomerList() {
                             paginationAutoPageSize={true}
                             suppressCellFocus={true}
                             rowSelection="single"
+                            onGridReady={onGridReady}
                         />
                     </div>
                 </Box>
