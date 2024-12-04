@@ -28,22 +28,21 @@ function EditCustomer(props) {
             email: props.data.email,
             phone: props.data.phone
         })
-    };
+    }
 
     const handleChange = (event) => {
         setCustomer({ ...customer, [event.target.name]: event.target.value })
-    };
+    }
     
     const handleSave = () => {
-        // eslint-disable-next-line react/prop-types
         updateCustomer(props.data._links.self.href, customer)
         .then(() => props.handleFetch())
-        .catch(error => console.error(error))
-    };
+        .catch(error => console.error("Error in saving customer ", error))
+    }
     
     const handleClose = () => {
         setOpen(false);
-    };
+    }
 
 
     return (

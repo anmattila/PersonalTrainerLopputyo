@@ -18,11 +18,11 @@ function AddCustomer(props) {
 
     const handleClickOpen = () => {
         setOpen(true);
-    };
+    }
     
     const handleChange = (event) => {
         setCustomer({ ...customer, [event.target.name]: event.target.value })
-    };
+    }
     
     const handleSave = () => {
         saveCustomer(customer)
@@ -30,12 +30,12 @@ function AddCustomer(props) {
             props.handleFetch();
             handleClose();
         })
-        .catch(error => console.log(error))
-    };
+        .catch(error => console.log("Error in saving customer ", error))
+    }
     
     const handleClose = () => {
         setOpen(false);
-    };
+    }
 
 
     return (

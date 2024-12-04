@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AddCustomer from './AddCustomer';
 import UpdateCustomer from './EditCustomer';
 import AddTraining from "./AddTraining";
@@ -15,16 +15,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 function CustomerList() {
 
     const [customers, setCustomers] = useState([]);
-    //const [open, setOpen] = useState(false);
 
     const [colDelfs, setColDefs] = useState([
         {
-            field: "add",
+            field: "add training",
             cellRenderer: params => <AddTraining data={params.data} handleFetch={handleFetch} />, width: 80
         },
-        { field: "firstname", filter: true, width: 140 },
-        { field: "lastname", filter: true, width: 140 },
-        { field: "streetaddress", filter: true, width: 150 },
+        { field: "firstname", headerName: "First name", filter: true, width: 140 },
+        { field: "lastname", headerName: "Last name", filter: true, width: 140 },
+        { field: "streetaddress", headerName: "Address", filter: true, width: 150 },
         { field: "postcode", filter: true, width: 110 },
         { field: "city", filter: true, width: 140 },
         { field: "email", filter: true, width: 150 },
@@ -33,9 +32,9 @@ function CustomerList() {
             cellRenderer: params => <UpdateCustomer data={params.data} handleFetch={handleFetch} />, width: 70
         },
         {
-            cellRenderer: params => <Button color="black" onClick={() => handleDelete(params.data)}>
-                <DeleteIcon /></Button>, width: 70
-        }
+            cellRenderer: params => <Button color="black" onClick={() => handleDelete(params.data)}><DeleteIcon />
+            </Button>, width: 70
+        },
     ])
 
     useEffect(() => {
@@ -45,45 +44,38 @@ function CustomerList() {
     const handleFetch = () => {
         getCustomers()
             .then(data => setCustomers(data._embedded.customers))
-            .catch(error => console.log(error))
+            .catch(error => console.log("Error in fecthing ", error))
     }
 
     const handleDelete = (params) => {
         if (window.confirm("Are you sure you want to delete this customer and all their trainings?")) {
-            // setOpen(true);
             deleteCustomer(params._links.self.href)
                 .then(() => handleFetch())
-                .catch(error => console.log(error))
+                .catch(error => console.log("Error in deleting ", error))
         }
     }
-    // use ag-grid dialog to confirm 
-
-    // const handleClose = () => {
-    //     setOpen(false);
-    //   }
 
     const [gridApi, setGridApi] = useState(null);
 
     const onGridReady = useCallback((event) => {
-        setGridApi(event.api);
+        setGridApi(event.api)
     }, []);
 
     const exportCsv = () => {
-        if(gridApi) {
+        if (gridApi) {
             gridApi.exportDataAsCsv({
                 columnKeys: ["firstname", "lastname", "streetaddress", "postcode", "city", "email", "phone"]
             });
         } else {
-            console.log("error");
+            console.log("Error in exporting")
         }
-    };
+    }
 
 
     return (
         <>
             <Container maxWidth="xl">
-            <CssBaseline />
-                <Button variant="outlined" color="black" onClick={exportCsv}>Csv-file</Button>
+                <CssBaseline />
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
                     <Typography variant="h5" >Customers</Typography>
                     <AddCustomer handleFetch={handleFetch} />
@@ -100,6 +92,9 @@ function CustomerList() {
                             onGridReady={onGridReady}
                         />
                     </div>
+                </Box>
+                <Box  sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button variant="outlined" size="small" color="black" onClick={exportCsv}>Download csv-file</Button>
                 </Box>
             </Container>
         </>

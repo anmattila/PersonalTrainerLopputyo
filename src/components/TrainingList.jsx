@@ -48,7 +48,7 @@ function Traininglist() {
                 });
                 setTrainingsWC(trainingWC)
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log("Error in fetching trainings", error))
     }
 
     const handleDelete = (params) => {
@@ -56,7 +56,7 @@ function Traininglist() {
         if (window.confirm("Are you sure you want to delete this training?")) {
             deleteTraining(params.id)
                 .then(() => handleFetch())
-                .catch(error => console.log(error))
+                .catch(error => console.log("Error in deleteing ", error))
         }
     }
 

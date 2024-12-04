@@ -25,25 +25,25 @@ function AddTraining(props) {
 
 
     const handleClickOpen = () => {
-        setOpen(true);
-    };
+        setOpen(true)
+    }
 
 
     
 
     const handleChange = (event) => {
         setTraining({ ...training, [event.target.name]: event.target.value })
-    };
+    }
 
     const handleSave = () => {
         saveTrainingToCustomer(props.data._links.customer.href, training)
             .then(() => handleClose())
-            .catch(error => console.log(error))
-    };
+            .catch(error => console.log("Error in saving training ", error))
+    }
 
     const handleClose = () => {
-        setOpen(false);
-    };
+        setOpen(false)
+    }
 
     return (
         <>
@@ -72,7 +72,7 @@ function AddTraining(props) {
                         fullWidth
                         margin="dense"
                         variant="outlined"
-                        label="Duration"
+                        label="Duration in minutes"
                         name="duration"
                         value={training.duration}
                         onChange={handleChange}

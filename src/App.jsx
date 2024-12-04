@@ -16,6 +16,7 @@ function App() {
               <Link to={"/"}>Home</Link>
               <Link to={"/customers"}>Customers</Link>
               <Link to={"/trainings"}>Trainings</Link>
+              <Link to={"/calendar"}>Calendar</Link>
             </Box>
           </Toolbar>
         </AppBar>
