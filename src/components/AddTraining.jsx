@@ -7,9 +7,7 @@ import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import dayjs from "dayjs";
-
 
 
 function AddTraining(props) {
@@ -18,18 +16,14 @@ function AddTraining(props) {
         date: null,
         duration: "",
         activity: "",
+        customer: ""
     });
 
-    const [customer, setCustomer] = useState(null);
     const [open, setOpen] = useState(false);
-
 
     const handleClickOpen = () => {
         setOpen(true)
     }
-
-
-    
 
     const handleChange = (event) => {
         setTraining({ ...training, [event.target.name]: event.target.value })
@@ -47,19 +41,17 @@ function AddTraining(props) {
 
     return (
         <>
-            <Button size="large" color="black" onClick={handleClickOpen} startIcon={<MoreTimeIcon />}></Button>
+            <Button size="large" color="black" onClick={handleClickOpen} startIcon={<PostAddIcon />}></Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add training to
-
+                <DialogTitle>Add training {console.log(props.data._links.customer.href)}
+                    {/* tulostaa oikean asiakkaan mutta ei pääse käsiksi nimeen */}
                 </DialogTitle>
-                {/* {console.log(props.data._links.customer.href)} */}
-                {/* {props.data._links.customer.href.params.firstname} */}
                 <DialogContent>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                             required
-                            margin="dense"
-                            //label="Date and time"
+                            margin="normal"
+                            label="Date and time"
                             name="date"
                             format="DD.MM.YYYY HH:mm"
                             ampm={false}
@@ -70,7 +62,7 @@ function AddTraining(props) {
                     <TextField
                         required
                         fullWidth
-                        margin="dense"
+                        margin="normal"
                         variant="outlined"
                         label="Duration in minutes"
                         name="duration"
@@ -80,14 +72,13 @@ function AddTraining(props) {
                     <TextField
                         required
                         fullWidth
-                        margin="dense"
+                        margin="normal"
                         variant="outlined"
                         label="Activity"
                         name="activity"
                         value={training.activity}
                         onChange={handleChange}
                     />
-
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="error" onClick={handleClose}>Cancel</Button>

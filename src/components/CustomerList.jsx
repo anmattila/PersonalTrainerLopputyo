@@ -64,7 +64,8 @@ function CustomerList() {
     const exportCsv = () => {
         if (gridApi) {
             gridApi.exportDataAsCsv({
-                columnKeys: ["firstname", "lastname", "streetaddress", "postcode", "city", "email", "phone"]
+                columnKeys: ["firstname", "lastname", "streetaddress", "postcode", "city", "email", "phone"],
+                suppressQuotes: true
             });
         } else {
             console.log("Error in exporting")

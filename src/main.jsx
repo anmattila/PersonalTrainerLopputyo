@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
-import Home from './components/Home.jsx'
 import CustomerList from './components/CustomerList.jsx'
 import TrainingList from './components/TrainingList.jsx'
 import Calendar from './components/Calendar.jsx'
@@ -16,12 +15,8 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        element: <Home />,
-        index: true
-      },
-      {
-        path: "customers",
         element: <CustomerList />,
+        index: true
       },
       {
         path: "trainings",
