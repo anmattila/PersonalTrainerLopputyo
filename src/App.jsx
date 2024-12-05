@@ -28,4 +28,3 @@ function App() {
 export default App
 
 // kaikki mikä näkyy jokaisella sivulla
-// outlet mikä komponentti näytetään, renderöidään valittu

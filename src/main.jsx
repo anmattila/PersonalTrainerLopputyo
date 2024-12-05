@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter } from 'react-router-dom';
+import { createHasRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
 import CustomerList from './components/CustomerList.jsx'
@@ -8,8 +8,9 @@ import TrainingList from './components/TrainingList.jsx'
 import Calendar from './components/Calendar.jsx'
 import Error from './components/Error.jsx'
 
-const router = createBrowserRouter([
-  {
+const router = createHasRouter([
+  {    
+    basename: import.meta.env.BASE_URL,
     path: "/",
     element: <App />,
     errorElement: <Error />,

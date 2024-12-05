@@ -1,6 +1,7 @@
 {
   "name": "ptlopputyo",
   "private": true,
+  "homepage": "https://anmattila.github.io/PersonalTrainerLopputyo/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
