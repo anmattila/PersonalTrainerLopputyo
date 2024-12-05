@@ -3,9 +3,7 @@ import { getTrainingsWithCustomers } from "../trainingapi";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
 import dayjs from "dayjs";
-import { ShortText } from "@mui/icons-material";
 
 
 function Calendar() {
@@ -21,19 +19,23 @@ function Calendar() {
                     end: dayjs(training.date).add(training.duration, "minute").toISOString()
                 }))
                 setEvents(events)
-            })   
+            })
             .catch(error => console.log("Error in fetching", error))
     }, []);
-    
+
 
     return (
+        <>
         <FullCalendar
-            plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
+            plugins={[dayGridPlugin, timeGridPlugin]}
             initialView='dayGridMonth'
             events={events}
-            slotLabelFormat={{
-                hour: 'numeric',
-                minute: 'numeric',
+            displayEventEnd={true}
+            nowIndicator={true}
+            eventDisplay="block"
+            eventTimeFormat={{
+                hour: '2-digit',
+                minute: '2-digit',
                 hour12: false
             }}
             headerToolbar={{
@@ -41,11 +43,8 @@ function Calendar() {
                 center: "title",
                 end: "dayGridMonth, timeGridWeek, timeGridDay"
             }}
-            displayEventEnd={true}
-            height= {800}
-            nowIndicator={true}   
-            editable={true}
         />
+        </>
     )
 }
 
